@@ -1,0 +1,11 @@
+.fractals-container{
+  display: flex;
+  flex-wrap: wrap;
+  /* width: 100%; */
+  justify-content: space-around;
+}
+.dir{
+  width: 200px;
+  height: 200px;
+  background-color: black;
+}
