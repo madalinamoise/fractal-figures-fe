@@ -1,34 +1,23 @@
 <div class="banner-text">
-  <!--  <nav class="navbar navbar-expand-sm navbar-light">-->
-  <!--    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">-->
-  <!--      <div class="navbar-nav">-->
-  <!--        <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>-->
-  <!--        <a class="nav-item nav-link" href="#">Features</a>-->
-  <!--        <a class="nav-item nav-link" href="#">Pricing</a>-->
-  <!--      </div>-->
-  <!--    </div>-->
-  <!--  </nav>-->
   <div class="primary-section">
     <div class="align-primary-section">
-      <div class="main-title">fractal/figures</div>
       <div class="main-description">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
         incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
         nisi ut aliquip ex ea commodo consequat."
       </div>
-
       <form [formGroup]="repositoryForm" (ngSubmit)="submitForm()">
         <div class="input-group input-group-lg">
-          <div class="input-group-prepend">
-            <img class="input-group-text github-input-logo" src="assets/GitHub-Mark-32px.png" alt="logo"/>
-          </div>
           <input type="text" class="form-control" formControlName="repository" placeholder="username/repository"
-                 name="repository">
+                 name="repository" #input>
         </div>
         <input type="submit"
                style="position: absolute; left: -9999px; width: 1px; height: 1px;"
-               tabindex="-1"/>
-      </form>
+                tabindex="-1" (click)="input.blur()"/>
 
+      </form>
+      <div  *ngIf="showProgressBar" class="progress">
+        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+      </div>
     </div>
   </div>
 </div>
