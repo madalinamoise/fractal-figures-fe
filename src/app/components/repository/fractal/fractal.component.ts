@@ -30,6 +30,8 @@ export class FractalComponent implements AfterViewInit {
     this.fractalCoordinates = [...this.fractalService.constructFractalCoordinates(figWidth, noOfLines, contributors)];
     this.noOfFractals = this.fractalCoordinates.length;
 
+    console.log(this.fractalCoordinates);
+
     const svg = d3.select(`#svg${this.fractalSVGId}`)
       .append('svg')
       .attr('width', figWidth)

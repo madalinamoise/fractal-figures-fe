@@ -2,23 +2,30 @@ import {Injectable} from '@angular/core';
 import {RectangleCoordinates} from '../models/RectangleCoordinates';
 import {IGitRepositoryContributor} from '../models/IGitRepositoryContributor';
 import {IRectangleCoordinates} from '../models/IRectangleCoordinates';
+import {colors} from '../shared/colors';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class FractalService {
-  public fractalCoordinates: Array<IRectangleCoordinates> = [];
-
-  constructor() {
-  }
+  fractalCoordinates: Array<IRectangleCoordinates> = [];
+  contributorsColorsMap: { [key: string]: string } = {};
+  colorIndex = -1;
 
   constructFractalCoordinates(figWidth: number, noOfLines: number, contributors: Array<IGitRepositoryContributor>): Array<IRectangleCoordinates> {
     this.fractalCoordinates = [];
     const metric = this.getMetric(figWidth, noOfLines);
     contributors.forEach((contributor: IGitRepositoryContributor, index: number) => {
       if (index === 0) {
-        this.fractalCoordinates.push(new RectangleCoordinates(0, 0, contributor.lines * metric, figWidth, this.getRandomColor()));
+        this.fractalCoordinates.push(new RectangleCoordinates(
+          0,
+          0,
+          contributor.lines * metric,
+          figWidth,
+          this.getContributorColorByName(contributor.name),
+          contributor.name
+        ));
       } else {
         const coordinates = new RectangleCoordinates(0, 0, 0, 0);
         if (index % 2 === 1) {
@@ -36,7 +43,8 @@ export class FractalService {
           coordinates.h = figWidth - coordinates.y;
           coordinates.w = contributor.area / (coordinates.h / metric) * metric;
         }
-        coordinates.color = this.getRandomColor();
+        coordinates.name = contributor.name;
+        coordinates.color = this.getContributorColorByName(contributor.name);
         this.fractalCoordinates.push(coordinates);
       }
     });
@@ -48,11 +56,14 @@ export class FractalService {
     return figWidth / noOfLines;
   }
 
-  getRandomColor(): string {
-    const rgb = [];
-    for (let i = 0; i < 3; i++) {
-      rgb.push(Math.floor(Math.random() * 255));
+  getContributorColorByName(name: string): string {
+    if (!this.contributorsColorsMap[name]) {
+      this.colorIndex += 1;
+      this.contributorsColorsMap = {
+        ...this.contributorsColorsMap, [name]: colors[this.colorIndex]
+      };
     }
-    return 'rgb(' + rgb.join(',') + ')';
+    return this.contributorsColorsMap[name];
   }
 }
+
