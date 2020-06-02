@@ -8,16 +8,20 @@ import {HttpClientModule} from '@angular/common/http';
 import {RepositoryComponent} from './components/repository/repository.component';
 import {AppRoutingModule} from './modules/app-routing/app-routing.module';
 import { FractalComponent } from './components/repository/fractal/fractal.component';
+import { NavComponent } from './components/nav/nav.component';
+import {RouterModule} from '@angular/router';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     RepositoryComponent,
-    FractalComponent
+    FractalComponent,
+    NavComponent
   ],
   imports: [
     BrowserModule,
+    RouterModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,

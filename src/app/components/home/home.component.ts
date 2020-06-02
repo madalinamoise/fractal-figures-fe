@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormControl, FormGroup} from '@angular/forms';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {GitService} from '../../services/git.service';
 import {Router} from '@angular/router';
 import IGitRepositoryData from '../../models/IGitRepositoryData';
@@ -12,9 +12,8 @@ import {Subscription} from 'rxjs';
 })
 export class HomeComponent implements OnInit, OnDestroy {
 
-  repositoryForm = new FormGroup({
-    repository: new FormControl('')
-  });
+  showProgressBar: boolean;
+  repositoryForm: FormGroup;
 
   private gitRepositoryDataSubscription: Subscription;
 
@@ -22,10 +21,20 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.showProgressBar = false;
     this.gitService.repositoryIsInitialized = false;
+    this.repositoryForm = new FormGroup({
+      repository: new FormControl({value: '', disabled: this.showProgressBar}, [Validators.required, Validators.pattern(/\w+\/\w+/)])
+    });
+
+  }
+
+  get repositoryFormControl() {
+    return this.repositoryForm.get('repository');
   }
 
   submitForm() {
+    this.showProgressBar = true;
     const requestPathVars = this.repositoryForm.controls.repository.value.split('/');
     this.gitRepositoryDataSubscription = this.gitService.getGitRepositoryDataByUsername(requestPathVars[0], requestPathVars[1])
       .subscribe((data: Array<IGitRepositoryData>) => {
@@ -37,6 +46,11 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.gitRepositoryDataSubscription.unsubscribe();
+    this.showProgressBar = false;
   }
 
+  onChange() {
+    console.log(this.repositoryForm.get('repository'));
+    console.log(this.repositoryForm);
+  }
 }
