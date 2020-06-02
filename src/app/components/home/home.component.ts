@@ -49,8 +49,4 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.showProgressBar = false;
   }
 
-  onChange() {
-    console.log(this.repositoryForm.get('repository'));
-    console.log(this.repositoryForm);
-  }
 }

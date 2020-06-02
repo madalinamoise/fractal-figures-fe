@@ -16,10 +16,10 @@ export class RepositoryComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.repositoryData = [];
     this.repositoryData.push(...this.gitService.currentRepositoryData);
+
   }
 
   ngOnChanges() {
-    console.log('inddd');
     this.repositoryData = [];
     this.repositoryData.push(...this.gitService.currentRepositoryData);
   }
@@ -30,7 +30,6 @@ export class RepositoryComponent implements OnInit, OnChanges {
       .subscribe((data: Array<IGitRepositoryData>) => {
           this.repositoryData = [...data];
           this.gitService.currentRepositoryData = [...data];
-          console.log(this.gitService.currentRepositoryData);
         }
       );
   }
