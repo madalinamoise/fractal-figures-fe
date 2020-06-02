@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormControl, FormGroup} from '@angular/forms';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {GitService} from '../../services/git.service';
 import {Router} from '@angular/router';
 import IGitRepositoryData from '../../models/IGitRepositoryData';
@@ -24,9 +24,13 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.showProgressBar = false;
     this.gitService.repositoryIsInitialized = false;
     this.repositoryForm = new FormGroup({
-      repository: new FormControl({value: '', disabled: this.showProgressBar})
+      repository: new FormControl({value: '', disabled: this.showProgressBar}, [Validators.required, Validators.pattern(/\w+\/\w+/)])
     });
 
+  }
+
+  get repositoryFormControl() {
+    return this.repositoryForm.get('repository');
   }
 
   submitForm() {
@@ -45,4 +49,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.showProgressBar = false;
   }
 
+  onChange() {
+    console.log(this.repositoryForm.get('repository'));
+    console.log(this.repositoryForm);
+  }
 }

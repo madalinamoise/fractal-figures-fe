@@ -8,15 +8,25 @@
       <form [formGroup]="repositoryForm" (ngSubmit)="submitForm()">
         <div class="input-group input-group-lg">
           <input type="text" class="form-control" formControlName="repository" placeholder="username/repository"
-                 name="repository" #input>
+                 name="repository" #input (change)="onChange()">
+          <div *ngIf="repositoryFormControl.invalid && (repositoryFormControl.dirty || repositoryFormControl.touched)"
+               class="alert alert-danger form-danger" role="alert">
+            <div *ngIf="repositoryFormControl.errors.pattern">
+              The input should have the username/repository format.
+            </div>
+            <div *ngIf="repositoryFormControl.errors.required">
+              This field is required.
+            </div>
+          </div>
         </div>
         <input type="submit"
                style="position: absolute; left: -9999px; width: 1px; height: 1px;"
-                tabindex="-1" (click)="input.blur()"/>
+               tabindex="-1" (click)="input.blur()"/>
 
       </form>
-      <div  *ngIf="showProgressBar" class="progress">
-        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+      <div *ngIf="showProgressBar" class="progress">
+        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75"
+             aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
       </div>
     </div>
   </div>
