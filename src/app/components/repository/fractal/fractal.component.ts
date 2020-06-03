@@ -30,7 +30,6 @@ export class FractalComponent implements AfterViewInit {
     this.fractalCoordinates = [...this.fractalService.constructFractalCoordinates(figWidth, noOfLines, contributors)];
     this.noOfFractals = this.fractalCoordinates.length;
 
-    console.log(this.fractalCoordinates);
     const tooltip = d3.select('body')
       .append('div')
       .style('position', 'absolute')

@@ -10,6 +10,7 @@ import {AppRoutingModule} from './modules/app-routing/app-routing.module';
 import { FractalComponent } from './components/repository/fractal/fractal.component';
 import { NavComponent } from './components/nav/nav.component';
 import {RouterModule} from '@angular/router';
+import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import {RouterModule} from '@angular/router';
     HomeComponent,
     RepositoryComponent,
     FractalComponent,
-    NavComponent
+    NavComponent,
+    BreadcrumbComponent
   ],
   imports: [
     BrowserModule,

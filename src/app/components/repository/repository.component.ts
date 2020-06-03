@@ -9,6 +9,8 @@ import IGitRepositoryData from '../../models/IGitRepositoryData';
 })
 export class RepositoryComponent implements OnInit, OnChanges {
   repositoryData: Array<IGitRepositoryData> = [];
+  repositoryFiles: Array<IGitRepositoryData> = [];
+  repositoryDirectories: Array<IGitRepositoryData> = [];
 
   constructor(private gitService: GitService) {
   }
@@ -16,21 +18,30 @@ export class RepositoryComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.repositoryData = [];
     this.repositoryData.push(...this.gitService.currentRepositoryData);
+    this.separateDataArrayByType(this.repositoryData);
 
   }
 
   ngOnChanges() {
     this.repositoryData = [];
     this.repositoryData.push(...this.gitService.currentRepositoryData);
+    this.separateDataArrayByType(this.repositoryData);
   }
 
   onClick(dirIndex) {
-    console.log(this.repositoryData[dirIndex].repoUrl);
-    this.gitService.getGitRepositoryDirectoryDataByUrl(this.repositoryData[dirIndex].repoUrl)
-      .subscribe((data: Array<IGitRepositoryData>) => {
-          this.repositoryData = [...data];
-          this.gitService.currentRepositoryData = [...data];
+    this.gitService.getGitRepositoryDirectoryDataByUrl(this.repositoryDirectories[dirIndex].repoUrl)
+      .subscribe((dataArray: Array<IGitRepositoryData>) => {
+          this.separateDataArrayByType(dataArray);
+          this.gitService.currentRepositoryData = [...dataArray];
         }
       );
+  }
+
+  separateDataArrayByType(dataArray: Array<IGitRepositoryData>) {
+    this.repositoryDirectories = [];
+    this.repositoryFiles = [];
+    return dataArray.forEach(data => data.repoUrl ?
+      this.repositoryDirectories = [...this.repositoryDirectories, data] : this.repositoryFiles = [...this.repositoryFiles, data]
+    );
   }
 }
