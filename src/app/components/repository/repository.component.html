@@ -1,6 +1,6 @@
 <div *ngIf="repositoryData" class="fractals-container">
   <div *ngFor="let data of repositoryData;let i=index">
-    <app-fractal *ngIf="data.noOfLines>0;else dirBlock" [noOfLines]="data.noOfLines" [figWidth]="200"
+    <app-fractal *ngIf="data.noOfLines>0;else dirBlock" [noOfLines]="data.noOfLines" [figWidth]="300"
                  [contributors]="data.contributors" id="fractal-{{i}}" [fractalSVGId]="i"></app-fractal>
     <ng-template #dirBlock>
       <div id="dir-{{i}}" class="dir"  (click)="onClick(i)" ></div>
