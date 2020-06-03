@@ -62,6 +62,7 @@ export class RepositoryComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.gitService.navigationTreePath = [];
     if (this.getDataByRepoUrlSubscription) {
       this.getDataByRepoUrlSubscription.unsubscribe();
     }
