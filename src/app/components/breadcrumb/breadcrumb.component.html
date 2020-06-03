@@ -1,0 +1,5 @@
+<nav aria-label="breadcrumb" class="container-breadcrumb">
+  <ol class="breadcrumb ol-breadcrumb">
+    <li class="breadcrumb-item" *ngFor="let element of path;let i=index" [ngClass]="{'active' : (i+1)===path.length}" (click)="onClick(element)"><a>{{element.name}}</a></li>
+  </ol>
+</nav>

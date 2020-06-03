@@ -1,0 +1,17 @@
+.container-breadcrumb{
+  display: flex;
+}
+.ol-breadcrumb{
+  width: 100%;
+  margin: 10px 20px;
+  background-color: rgba(255, 189, 57, 0.5)
+}
+.breadcrumb-item{
+  color: #3a0088;
+}
+.breadcrumb-item:hover:not(.active){
+  cursor: pointer;
+}
+.breadcrumb-item.active{
+  color: #6c757d
+}

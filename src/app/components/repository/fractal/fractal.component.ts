@@ -30,13 +30,11 @@ export class FractalComponent implements AfterViewInit {
     this.fractalCoordinates = [...this.fractalService.constructFractalCoordinates(figWidth, noOfLines, contributors)];
     this.noOfFractals = this.fractalCoordinates.length;
 
-    console.log(this.fractalCoordinates);
     const tooltip = d3.select('body')
       .append('div')
       .style('position', 'absolute')
       .style('z-index', '10')
       .style('visibility', 'hidden')
-      .style('font-size', '20px')
       .style('color', 'rgba(58, 0, 136, 1)');
 
     const svg = d3.select(`#svg${this.fractalSVGId}`)
