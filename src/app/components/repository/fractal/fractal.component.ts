@@ -13,10 +13,10 @@ import {IRectangleCoordinates} from '../../../models/IRectangleCoordinates';
 export class FractalComponent implements AfterViewInit {
   private fractalCoordinates: Array<IRectangleCoordinates>;
   private noOfFractals: number;
-  @Input('noOfLines') noOfLines: number;
-  @Input('contributors') contributors: Array<IGitRepositoryContributor>;
-  @Input('figWidth') figWidth: number;
-  @Input('fractalSVGId') fractalSVGId: number;
+  @Input() noOfLines: number;
+  @Input() contributors: Array<IGitRepositoryContributor>;
+  @Input() figWidth: number;
+  @Input() fractalSVGId: number;
 
   constructor(private gitService: GitService, private fractalService: FractalService) {
   }
@@ -56,7 +56,7 @@ export class FractalComponent implements AfterViewInit {
       .style('cursor', 'pointer')
       .attr('transform', 'translate(0, 0)')
       .on('mouseover', d => {
-        tooltip.style('visibility', 'visible').text(`@${d.name}`);
+        tooltip.style('visibility', 'visible').text(`@${d.name}`).append('p').text(`Metric area: ${d.metricArea.toFixed(2)}`);
         d3.select(`#svg${this.fractalSVGId}-rect${this.fractalCoordinates.indexOf(d)}`).style('opacity', 0.5);
       })
       .on('mousemove', () => {
