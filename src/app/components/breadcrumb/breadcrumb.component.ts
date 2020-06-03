@@ -1,5 +1,4 @@
-import {Component, Input, OnChanges, OnInit} from '@angular/core';
-import {GitService} from '../../services/git.service';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'app-breadcrumb',
@@ -7,10 +6,12 @@ import {GitService} from '../../services/git.service';
   styleUrls: ['./breadcrumb.component.css']
 })
 export class BreadcrumbComponent implements OnInit, OnChanges {
-  @Input('breadcrumpPath') breadcrumpPath: Array<{ name: string, repoUrl: string }>;
-  private path: Array<{ name: string, repoUrl: string }> = [];
+  @Input() breadcrumpPath: Array<{ name: string, repoUrl: string }>;
+  @Output() pathChanged: EventEmitter<{ name: string, repoUrl }> = new EventEmitter<{ name: string, repoUrl }>();
 
-  constructor(private gitService:GitService) {
+  path: Array<{ name: string, repoUrl: string }> = [];
+
+  constructor() {
   }
 
   ngOnInit() {
@@ -22,6 +23,6 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
   }
 
   onClick(element: { name: string; repoUrl: string }) {
-
+    this.pathChanged.emit(element);
   }
 }

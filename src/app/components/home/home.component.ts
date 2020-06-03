@@ -35,8 +35,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   submitForm() {
     this.showProgressBar = true;
-    const requestPathVars = this.repositoryForm.controls.repository.value.split('/');
-    this.gitRepositoryDataSubscription = this.gitService.getGitRepositoryDataByUsername(requestPathVars[0], requestPathVars[1])
+    this.gitRepositoryDataSubscription = this.gitService.getGitRepositoryDataByUsername(this.repositoryForm.controls.repository.value)
       .subscribe((data: Array<IGitRepositoryData>) => {
         this.gitService.currentRepositoryData = [...data];
         this.gitService.repositoryIsInitialized = true;

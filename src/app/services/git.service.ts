@@ -38,10 +38,10 @@ export class GitService {
     return this.gitClient.get<Array<IGitRepositoryData>>('/assets/example.json');
   }
 
-  getGitRepositoryDataByUsername(username: string, repository: string): Observable<Array<IGitRepositoryData>> {
-    localStorage.setItem('username', username);
-    localStorage.setItem('repository', repository);
-    return this.gitClient.get<Array<IGitRepositoryData>>(`http://localhost:8080/init-repository/${username}/${repository}`);
+  getGitRepositoryDataByUsername(repository: string): Observable<Array<IGitRepositoryData>> {
+    const requestPathVars = repository.split('/');
+    return this.gitClient
+      .get<Array<IGitRepositoryData>>(`http://localhost:8080/init-repository/${requestPathVars[0]}/${requestPathVars[1]}`);
   }
 
   getGitRepositoryDirectoryDataByUrl(dirUrl: string): Observable<Array<IGitRepositoryData>> {
