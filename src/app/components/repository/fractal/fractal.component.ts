@@ -35,7 +35,6 @@ export class FractalComponent implements AfterViewInit {
       .style('position', 'absolute')
       .style('z-index', '10')
       .style('visibility', 'hidden')
-      .style('font-size', '20px')
       .style('color', 'rgba(58, 0, 136, 1)');
 
     const svg = d3.select(`#svg${this.fractalSVGId}`)

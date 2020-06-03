@@ -40,6 +40,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       .subscribe((data: Array<IGitRepositoryData>) => {
         this.gitService.currentRepositoryData = [...data];
         this.gitService.repositoryIsInitialized = true;
+        this.gitService.navigationTreePath.push({name: this.repositoryForm.controls.repository.value, repoUrl: ''});
         this.router.navigate(['/repository']);
       });
   }

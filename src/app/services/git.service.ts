@@ -12,8 +12,8 @@ export class GitService {
   private _repositoryIsInitialized = false;
   // tslint:disable-next-line:variable-name
   private _currentRepositoryData: Array<IGitRepositoryData>;
-  // tslint:disable-next-line:variable-name
-  private _pastRepositoryData: Array<IGitRepositoryData>;
+
+  public navigationTreePath: Array<{ name: string, repoUrl: string }> = [];
 
   constructor(private gitClient: HttpClient) {
   }
@@ -24,14 +24,6 @@ export class GitService {
 
   set currentRepositoryData(value: Array<IGitRepositoryData>) {
     this._currentRepositoryData = value;
-  }
-
-  get pastRepositoryData(): Array<IGitRepositoryData> {
-    return this._pastRepositoryData;
-  }
-
-  set pastRepositoryData(value: Array<IGitRepositoryData>) {
-    this._pastRepositoryData = value;
   }
 
   get repositoryIsInitialized(): boolean {
