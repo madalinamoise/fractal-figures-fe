@@ -56,7 +56,7 @@ export class FractalComponent implements AfterViewInit {
       .style('cursor', 'pointer')
       .attr('transform', 'translate(0, 0)')
       .on('mouseover', d => {
-        tooltip.style('visibility', 'visible').text(`@${d.name}`).append('p').text(`Metric area: ${d.metricArea.toFixed(2)}`);
+        tooltip.style('visibility', 'visible').text(`@${d.name}`).append('p').text(`Lines of code: ${d.linesOfCode}`);
         d3.select(`#svg${this.fractalSVGId}-rect${this.fractalCoordinates.indexOf(d)}`).style('opacity', 0.5);
       })
       .on('mousemove', () => {

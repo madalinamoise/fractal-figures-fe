@@ -45,7 +45,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.gitRepositoryDataSubscription.unsubscribe();
+    if (this.gitRepositoryDataSubscription) {
+      this.gitRepositoryDataSubscription.unsubscribe();
+    }
     this.showProgressBar = false;
   }
 
