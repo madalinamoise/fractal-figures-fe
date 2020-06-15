@@ -5,8 +5,8 @@
       <a>> {{data.name}}</a>
     </div>
   </div>
-  <div *ngFor="let data of repositoryFiles;let i=index" class="fractal-list">
+  <div *ngFor="let data of repositoryFiles;let i=index" class="fractal-item" (mouseleave)="onMouseLeave()" (mouseenter)="onMouseEnter()" >
     <app-fractal [noOfLines]="data.noOfLines" [figWidth]="300"
-                 [contributors]="data.contributors" id="file-{{i}}" [fractalSVGId]="i"></app-fractal>
+                 [contributors]="data.contributors" id="file-{{i}}" [fractalSVGId]="i" ></app-fractal>
   </div>
 </div>

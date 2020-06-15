@@ -25,7 +25,7 @@ export class FractalService {
           figWidth,
           this.getContributorColorByName(contributor.name),
           contributor.name,
-          contributor.area * metric
+          contributor.lines + '/' + noOfLines
         ));
       } else {
         const coordinates = new RectangleCoordinates(0, 0, 0, 0);
@@ -46,7 +46,7 @@ export class FractalService {
         }
         coordinates.name = contributor.name;
         coordinates.color = this.getContributorColorByName(contributor.name);
-        coordinates.metricArea = contributor.area * metric;
+        coordinates.linesOfCode = contributor.lines + '/' + noOfLines;
         this.fractalCoordinates.push(coordinates);
       }
     });
