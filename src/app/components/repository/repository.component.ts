@@ -70,4 +70,10 @@ export class RepositoryComponent implements OnInit, OnDestroy {
       this.getDataByUsernameSubscription.unsubscribe();
     }
   }
+
+  onMouseEnter() {
+  }
+
+  onMouseLeave() {
+  }
 }
