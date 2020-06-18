@@ -2,11 +2,13 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {GitService} from '../../services/git.service';
 import IGitRepositoryData from '../../models/IGitRepositoryData';
 import {Subscription} from 'rxjs';
+import {PathNavigationCommunicationService} from '../../services/path-navigation-communication.service';
 
 @Component({
   selector: 'app-repository',
   templateUrl: './repository.component.html',
-  styleUrls: ['./repository.component.css']
+  styleUrls: ['./repository.component.css'],
+  providers: [PathNavigationCommunicationService]
 })
 export class RepositoryComponent implements OnInit, OnDestroy {
   repositoryData: Array<IGitRepositoryData> = [];
@@ -15,22 +17,23 @@ export class RepositoryComponent implements OnInit, OnDestroy {
   navigationTreePath: Array<{ name: string, repoUrl: string }> = [];
   getDataByRepoUrlSubscription: Subscription;
   getDataByUsernameSubscription: Subscription;
+  isMouseInHover: boolean;
 
-  constructor(private gitService: GitService) {
+  constructor(private gitService: GitService, private communicationService: PathNavigationCommunicationService) {
   }
 
   ngOnInit() {
-    this.navigationTreePath = [...this.gitService.navigationTreePath];
     this.repositoryData = [];
     this.repositoryData.push(...this.gitService.currentRepositoryData);
     this.separateDataArrayByType(this.repositoryData);
-
+    this.isMouseInHover = false;
+    this.navigationTreePath = [...this.gitService.navigationTreePath];
+    this.communicationService.announceCommunication(this.navigationTreePath);
   }
 
   onClick(data) {
     const {name, repoUrl} = data;
-    this.gitService.navigationTreePath.push({name, repoUrl});
-    this.navigationTreePath = [...this.gitService.navigationTreePath];
+    this.navigationTreePath.push({name, repoUrl});
     this.getDataByRepoUrl(repoUrl);
   }
 
@@ -39,6 +42,7 @@ export class RepositoryComponent implements OnInit, OnDestroy {
       .subscribe((dataArray: Array<IGitRepositoryData>) => {
           this.separateDataArrayByType(dataArray);
           this.gitService.currentRepositoryData = [...dataArray];
+          this.communicationService.announceCommunication(this.navigationTreePath);
         }
       );
   }
@@ -53,7 +57,7 @@ export class RepositoryComponent implements OnInit, OnDestroy {
 
   onPathChange($event: { name: string; repoUrl }) {
     const index = this.navigationTreePath.indexOf($event);
-    this.gitService.navigationTreePath = this.navigationTreePath = [...this.navigationTreePath.slice(0, index + 1)];
+    this.navigationTreePath = [...this.navigationTreePath.slice(0, index + 1)];
     $event.repoUrl ?
       this.getDataByRepoUrl($event.repoUrl) :
       this.gitService.getGitRepositoryDataByUsername($event.name).subscribe((dataArray: Array<IGitRepositoryData>) => {
@@ -69,11 +73,22 @@ export class RepositoryComponent implements OnInit, OnDestroy {
     if (this.getDataByUsernameSubscription) {
       this.getDataByUsernameSubscription.unsubscribe();
     }
+    this.isMouseInHover = false;
   }
 
-  onMouseEnter() {
+  onMouseEnter(name: string) {
+    if (!this.isMouseInHover) {
+      this.navigationTreePath.push({name, repoUrl: ''});
+      this.isMouseInHover = !this.isMouseInHover;
+      this.communicationService.announceCommunication(this.navigationTreePath);
+    }
   }
 
   onMouseLeave() {
+    if (this.isMouseInHover) {
+      this.navigationTreePath.pop();
+      this.isMouseInHover = !this.isMouseInHover;
+      this.communicationService.announceCommunication(this.navigationTreePath);
+    }
   }
 }
