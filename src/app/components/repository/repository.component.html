@@ -1,11 +1,11 @@
-<app-breadcrumb *ngIf="repositoryData" [breadcrumpPath]="navigationTreePath" (pathChanged)="onPathChange($event)"></app-breadcrumb>
+<app-breadcrumb *ngIf="repositoryData" (pathChanged)="onPathChange($event)"></app-breadcrumb>
 <div *ngIf="repositoryData" class="data-container">
   <div class="list-group list-group-flush dir-list">
     <div *ngFor="let data of repositoryDirectories;let i=index"  class="list-group-item list-group-item-action" id="dir-{{i}}" (click)="onClick(data)">
       <a>> {{data.name}}</a>
     </div>
   </div>
-  <div *ngFor="let data of repositoryFiles;let i=index" class="fractal-item" (mouseleave)="onMouseLeave()" (mouseenter)="onMouseEnter()" >
+  <div *ngFor="let data of repositoryFiles;let i=index" class="fractal-item" (mouseleave)="onMouseLeave()" (mouseenter)="onMouseEnter(data.name)" >
     <app-fractal [noOfLines]="data.noOfLines" [figWidth]="300"
                  [contributors]="data.contributors" id="file-{{i}}" [fractalSVGId]="i" ></app-fractal>
   </div>
