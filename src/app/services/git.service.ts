@@ -40,7 +40,8 @@ export class GitService {
 
   getGitRepositoryDataByUsername(repository: string): Observable<Array<IGitRepositoryData>> {
     const requestPathVars = repository.split('/');
-    console.log(requestPathVars)
+    localStorage.setItem('username', requestPathVars[0]);
+    localStorage.setItem('repository', requestPathVars[1]);
     return this.gitClient
       .get<Array<IGitRepositoryData>>(`http://localhost:8080/init-repository/${requestPathVars[0]}/${requestPathVars[1]}`);
   }
