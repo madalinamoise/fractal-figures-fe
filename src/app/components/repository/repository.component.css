@@ -1,8 +1,15 @@
+.breadcrump-fixed{
+  padding-top: 65px;
+  position: fixed;
+  width: 100%;
+  z-index: 100;
+}
 .data-container{
   display: flex;
   flex-wrap: wrap;
   /* width: 100%; */
   justify-content: space-around;
+  padding-top: 130px;
 }
 .fractal-item{
   margin: 20px;
@@ -15,7 +22,7 @@
 .list-group-item{
   background-color: rgba(255, 189, 57, 0.5);
   color: #3a0088;
-
+  cursor: pointer;
 }
 .list-group-item:hover{
   background-color:rgba(255, 189, 57, 1);
